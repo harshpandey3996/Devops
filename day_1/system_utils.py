@@ -12,4 +12,4 @@ def get_system_details():
         "disk" : disk
     }
 
-    print(system_info)
+    return system_info
