@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import subprocess
 LEVELS = ("INFO","WARNING", "ERROR")
 
 
@@ -19,6 +19,12 @@ def count_log_levels(text):
             if level in tokens:
                 counter[level] += 1
     return counter
-path = "C:/Users/harsh pandey/OneDrive/Desktop/python_life/python_devops/Devops/day_2/app.log"
-text = read_log_file(path)
-count_log_levels(text)
+# path = "C:/Users/harsh pandey/OneDrive/Desktop/python_life/python_devops/Devops/day_2/app.log"
+# text = read_log_file(path)
+# count_log_levels(text)
+
+def show_docker_containers():
+    return subprocess.run(["docker" , "ps" , "-a"],
+        capture_output=True,
+        text=True,
+    )

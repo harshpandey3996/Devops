@@ -1,5 +1,5 @@
 from langchain_ollama import ChatOllama
-from devops_tools import read_log_file, count_log_levels
+from devops_tools import read_log_file, count_log_levels ,show_docker_containers
 from langchain_core.tools import tool
 from langchain.agents import create_agent
 
@@ -18,13 +18,21 @@ def analyze_logs(path):
     """
     return count_log_levels(read_log_file(path))
 
+@tool
+def get_docker_containers():
+    """
+    This tool internally runs docker command via subprocess and gets the running and exited containers information  
+    """
+
+    return show_docker_containers()
+
 
 # LLM + Tools = AI Agent
-TOOLS = [analyze_logs]
+TOOLS = [analyze_logs,get_docker_containers]
 
 SYSTEM_PROMPT = """
 You are a Log Analysis Agent for DevOps engineers.
-Always use the analyze_logs tool to get exact counts, never guess.
+Always use the analyze_logs tool and Analyze the Docker Containers runings locally using `get_docker_containers` to get exact counts, never guess.
 State the INFO/WARNING/ERROR counts, then give a one or two line summary.
 Suggest ideas only, never perform production actions.
 """
